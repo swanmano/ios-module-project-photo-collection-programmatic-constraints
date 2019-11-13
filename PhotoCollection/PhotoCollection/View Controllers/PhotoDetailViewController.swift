@@ -25,6 +25,50 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
         updateViews()
     }
     
+    func setUpSubviews() {
+        // Photo
+        let displayPhoto = UIImageView()
+        displayPhoto.translatesAutoresizingMaskIntoConstraints = false
+        displayPhoto.contentMode = .scaleAspectFit
+        
+        view.addSubview(displayPhoto)
+        
+        let photoTopConstraint = displayPhoto.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 60)
+        let photoCenterXConstraint = displayPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
+        let photoHeightConstraint = displayPhoto.heightAnchor.constraint(equalToConstant: 150)
+        let photoWidthConstraint = displayPhoto.widthAnchor.constraint(equalTo: displayPhoto.heightAnchor, multiplier: 1.5)
+        
+        NSLayoutConstraint.activate([photoTopConstraint, photoCenterXConstraint, photoHeightConstraint, photoWidthConstraint])
+        
+        // Button
+        let addImageButton = UIButton(type: .system)
+        addImageButton.translatesAutoresizingMaskIntoConstraints = false
+        addImageButton.setTitle("Add Image", for: .normal)
+        addImageButton.addTarget(self, action: #selector(addImage), for: .touchUpInside)
+        
+        view.addSubview(addImageButton)
+        
+        let buttonTopConstraint = addImageButton.topAnchor.constraint(equalTo: displayPhoto.bottomAnchor, constant: 60)
+        let buttonCenterXConstrating = addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
+        
+        NSLayoutConstraint.activate([buttonTopConstraint, buttonCenterXConstrating])
+        
+        // Text Field
+        let photoName = UITextField()
+        photoName.translatesAutoresizingMaskIntoConstraints = false
+        photoName.placeholder = "Enter a name for the photo."
+        
+        view.addSubview(photoName)
+        
+        let nameTopConstraint = photoName.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 25)
+        let nameCenterXConstraint = photoName.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
+        let nameLeadingConstraint = photoName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30)
+        let nameTrailingConstraint = photoName.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 30)
+        
+        NSLayoutConstraint.activate([nameTopConstraint, nameCenterXConstraint, nameLeadingConstraint, nameTrailingConstraint])
+        
+    }
+    
     // MARK: - UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -38,7 +82,7 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
     
     // MARK: - Private Methods
     
-    private func addImage() {
+    @objc private func addImage() {
         
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
     

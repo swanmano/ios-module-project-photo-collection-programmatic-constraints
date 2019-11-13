@@ -13,6 +13,8 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     let photoController = PhotoController()
     let themeHelper = ThemeHelper()
     
+    // property used to specify the number of photos to display horizontally on the screen.
+    // Used in the sizeForItemAt method below.
     var horizontalPhotos: CGFloat = 2
     
     override func viewWillAppear(_ animated: Bool) {
