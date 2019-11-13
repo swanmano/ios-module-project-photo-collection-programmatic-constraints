@@ -23,6 +23,7 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
         
         setTheme()
         updateViews()
+        setUpSubviews()
     }
     
     func setUpSubviews() {
@@ -33,13 +34,13 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
         
         view.addSubview(displayPhoto)
         
-        let photoTopConstraint = displayPhoto.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 60)
-        let photoCenterXConstraint = displayPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
-        let photoHeightConstraint = displayPhoto.heightAnchor.constraint(equalToConstant: 150)
-        let photoWidthConstraint = displayPhoto.widthAnchor.constraint(equalTo: displayPhoto.heightAnchor, multiplier: 1.5)
+        displayPhoto.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
+        displayPhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        displayPhoto.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        displayPhoto.widthAnchor.constraint(equalTo: displayPhoto.heightAnchor, multiplier: 1.5).isActive = true
         
-        NSLayoutConstraint.activate([photoTopConstraint, photoCenterXConstraint, photoHeightConstraint, photoWidthConstraint])
-        
+        self.imageView = displayPhoto
+                
         // Button
         let addImageButton = UIButton(type: .system)
         addImageButton.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +50,7 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
         view.addSubview(addImageButton)
         
         let buttonTopConstraint = addImageButton.topAnchor.constraint(equalTo: displayPhoto.bottomAnchor, constant: 60)
-        let buttonCenterXConstrating = addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
+        let buttonCenterXConstrating = addImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         
         NSLayoutConstraint.activate([buttonTopConstraint, buttonCenterXConstrating])
         
@@ -61,11 +62,11 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
         view.addSubview(photoName)
         
         let nameTopConstraint = photoName.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 25)
-        let nameCenterXConstraint = photoName.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
-        let nameLeadingConstraint = photoName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30)
-        let nameTrailingConstraint = photoName.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 30)
+        let nameCenterXConstraint = photoName.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         
-        NSLayoutConstraint.activate([nameTopConstraint, nameCenterXConstraint, nameLeadingConstraint, nameTrailingConstraint])
+        NSLayoutConstraint.activate([nameTopConstraint,nameCenterXConstraint])
+        
+        self.titleTextField = photoName
         
         // SaveButton
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(savePhoto))
@@ -75,11 +76,11 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        picker.dismiss(animated: true, completion: nil)
         
-        guard let image = info[.originalImage] as? UIImage else { return }
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        picker.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Private Methods
@@ -100,7 +101,9 @@ class PhotoDetailViewController: UIViewController, UIImagePickerControllerDelega
                     NSLog("User did not authorize access to the photo library")
                     return
                 }
+                DispatchQueue.main.async {
                 self.presentImagePickerController()
+                }
             }
         default:
             break

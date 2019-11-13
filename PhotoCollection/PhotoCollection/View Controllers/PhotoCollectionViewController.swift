@@ -15,7 +15,6 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
     
     // property used to specify the number of photos to display horizontally on the screen.
     // Used in the sizeForItemAt method below.
-    var horizontalPhotos: CGFloat = 2
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,15 +23,17 @@ class PhotoCollectionViewController: UICollectionViewController, UICollectionVie
         setTheme()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let edgeInsets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-        return edgeInsets
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        let edgeInsets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+//        return edgeInsets
+//    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 4
+        return 0
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        let horizontalPhotos: CGFloat = 3
         let horizontalInsets = collectionView.contentInset.left + collectionView.contentInset.right
         let itemSpacing = (collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing * (horizontalPhotos - 1)
         
