@@ -13,7 +13,11 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     private var photoSelected: UIImageView!
     private var nameLabel: UILabel!
 
-    var photo: Photo?
+    var photo: Photo? {
+        didSet {
+            updateViews()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -94,9 +98,14 @@ class PhotoCollectionViewCell: UICollectionViewCell {
                            multiplier: 1,
                            constant: -2).isActive = true
         
+        self.nameLabel = nameLabel
+        
     }
     
-    // TODO: beging with part 2 number 2.  Create an updateViews() function
-    
+    private func updateViews() {
+        guard let photo = photo else { fatalError("A photo image was not loaded in the cell.")}
+        photoSelected.image = UIImage(data: photo.imageData)
+        nameLabel.text = photo.title
+    }
     
 }
