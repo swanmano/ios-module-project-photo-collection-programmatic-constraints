@@ -8,16 +8,25 @@
 
 import UIKit
 
+protocol ChangeThemeUpdate {
+    func updateTheme()
+}
+
+
 class ThemeSelectionViewController: UIViewController {
+    
+    var themeHelper: ThemeHelper?
+    var delegate: ChangeThemeUpdate?
     
     override func viewDidLoad() {
         setUpSubviews()
     }
     
-    
-    
     // MARK: Viewcontroller UI
     func setUpSubviews() {
+        
+        title = "Photo Collection"
+        
         let instructLabel = UILabel()
         instructLabel.translatesAutoresizingMaskIntoConstraints = false
         instructLabel.text = "Select the color theme to use:"
@@ -58,13 +67,13 @@ class ThemeSelectionViewController: UIViewController {
 
     @objc func selectDarkTheme() {
         themeHelper?.setThemePreferenceToDark()
+        delegate?.updateTheme()
         dismiss(animated: true, completion: nil)
     }
     
     @objc func selectBlueTheme() {
         themeHelper?.setThemePreferenceToBlue()
+        delegate?.updateTheme()
         dismiss(animated: true, completion: nil)
     }
-    
-    var themeHelper: ThemeHelper?
 }
