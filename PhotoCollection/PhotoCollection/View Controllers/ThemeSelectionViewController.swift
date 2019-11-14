@@ -24,16 +24,24 @@ class ThemeSelectionViewController: UIViewController {
     
     // MARK: Viewcontroller UI
     func setUpSubviews() {
+        // Title Label
+        let titleLable = UILabel()
+        titleLable.translatesAutoresizingMaskIntoConstraints = false
+        titleLable.text = "Photo Collection"
+        titleLable.font = .boldSystemFont(ofSize: 38)
+        view.addSubview(titleLable)
         
-        title = "Photo Collection"
+        titleLable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
+        titleLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         
+        // Instruction Label
         let instructLabel = UILabel()
         instructLabel.translatesAutoresizingMaskIntoConstraints = false
         instructLabel.text = "Select the color theme to use:"
         
         view.addSubview(instructLabel)
         
-        let labelTopConstraint = NSLayoutConstraint(item: instructLabel, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 30)
+        let labelTopConstraint = NSLayoutConstraint(item: instructLabel, attribute: .top, relatedBy: .equal, toItem: titleLable, attribute: .bottom, multiplier: 1, constant: 30)
         let labelCenterXConstraint = NSLayoutConstraint(item: instructLabel, attribute: .centerX, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .centerX, multiplier: 1, constant: 0)
         
         NSLayoutConstraint.activate([labelTopConstraint, labelCenterXConstraint])
@@ -47,9 +55,9 @@ class ThemeSelectionViewController: UIViewController {
         view.addSubview(darkButton)
         
         let darkButtonTopConstraint = NSLayoutConstraint(item: darkButton, attribute: .top, relatedBy: .equal, toItem: instructLabel, attribute: .bottom, multiplier: 1, constant: 40)
-        let darkButtonLeadingConstraint = NSLayoutConstraint(item: darkButton, attribute: .leading, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .leading, multiplier: 1, constant: 50)
+        let darkButtonCenterXConstraint = NSLayoutConstraint(item: darkButton, attribute: .centerX, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .centerX, multiplier: 1, constant: -50)
         
-        NSLayoutConstraint.activate([darkButtonTopConstraint, darkButtonLeadingConstraint])
+        NSLayoutConstraint.activate([darkButtonTopConstraint, darkButtonCenterXConstraint])
         
         // Blue theme button
         let blueButton = UIButton(type: .system)
@@ -60,9 +68,9 @@ class ThemeSelectionViewController: UIViewController {
         view.addSubview(blueButton)
         
         let blueButtonCenterYConstraint = NSLayoutConstraint(item: blueButton, attribute: .centerY, relatedBy: .equal, toItem: darkButton, attribute: .centerY, multiplier: 1, constant: 0)
-        let blueButtonTrailingConstraint = NSLayoutConstraint(item: blueButton, attribute: .trailing, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .trailing, multiplier: 1, constant: -50)
+        let blueButtonCenterXConstraint = NSLayoutConstraint(item: blueButton, attribute: .centerX, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .centerX, multiplier: 1, constant: 50)
         
-        NSLayoutConstraint.activate([blueButtonCenterYConstraint, blueButtonTrailingConstraint])
+        NSLayoutConstraint.activate([blueButtonCenterYConstraint, blueButtonCenterXConstraint])
     }
 
     @objc func selectDarkTheme() {
